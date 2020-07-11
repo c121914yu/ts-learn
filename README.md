@@ -46,3 +46,25 @@ typeof - 查看类型
 默认变量值为 undefined
 
 null 与 undefined 为一种类型,两者可以互相转化，但不可以由其他类型转化而来，但可以转化成其他类型。
+
+## 类
+
+与 js 类似，但是可以指定数据类型。  
+拥有 get 和 set，可以对私有属性进行操作，属于属性而不属于函数。  
+拥有 static，可以通过类名访问而不需要构造对象。
+namespace - 命名空间，外部需要访问内部时内部需要用 export ，外部通过 name.param 访问
+通过指令 tsc --outfile **.js **.ts \*\*.ts - 将两个 ts 合并成 1 个 js 文件
+多重命名空间连续.
+/// <reference path="circle.ts"/> - 引入其他 ts 文件，编译指令: tsc **.ts --outfile **.js
+
+```ts
+// 引入模块方法，仅在node环境下使用，浏览器无法识别
+// main.ts
+import { PI } from "./export"
+import * as circle from "./export"
+console.log(PI)
+console.log(circle.PI)
+
+// export.ts
+export const PI: number = 5
+```

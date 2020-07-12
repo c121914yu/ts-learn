@@ -6,17 +6,16 @@
 
 ### 自定义事件
 
-// 1. 组件中定义 click 事件
-@click = "onclick"
-// 2. 组件中实现 onclick 事件
-onclick(){ this.&emit("click") }
-// 当然也可以通过引入
-Emit @Emit('click')
-onClick() { return }
-// 3. 父级接受事件
-<UIButton @click="sayHello"></UIButton>
-// 4. 实现 sayHello
-sayHello(){ console.log("hello") }
+1. 组件中定义 click 事件
+   > @click = "onclick"
+2. 组件中实现 onclick 事件
+   > onclick(){ this.&emit("click") }
+3. 当然也可以通过引入
+   > Emit @Emit('click') onClick() { return }
+4. 父级接受事件
+   > <UIButton @click="sayHello"></UIButton>
+5. 实现 sayHello
+   > sayHello(){ console.log("hello") }
 
 ### 动态添加类
 

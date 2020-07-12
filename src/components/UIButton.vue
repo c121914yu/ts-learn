@@ -1,7 +1,7 @@
 <template>
   <button
     class="ui-btn"
-    :class="{ 
+    :class="[UIshadow,{ 
       'ui-btn-long': long,
       'ui-btn-xsmall': xsmall,
       'ui-btn-small': small,
@@ -12,7 +12,12 @@
       'ui-btn-text': text,
       'ui-btn-tile': tile,
       'ui-btn-rounded': rounded,
-      'ui-btn-circle': circle
+      'ui-btn-circle': circle,
+      'ui-btn-disabled': disabled
+    }]"
+    :style="{
+      '--color-tint': initColor,
+      '--color-title': initTitleColor
     }"
     @click="onClick"
   >
@@ -22,9 +27,10 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Emit, Prop } from 'vue-property-decorator'
+import { Component, Emit, Prop, Mixins } from 'vue-property-decorator'
+import UIshadow from './UIshadow.vue'
 @Component //类装饰器
-export default class UIButton extends Vue {
+export default class UIButton extends Mixins(UIshadow) {
   //属性装饰器,仅可读
   @Prop(Boolean)
   readonly long!: boolean //!代表非空断言符号，表示变量不会为null或undefined,即不会进行类型转换
@@ -64,10 +70,43 @@ export default class UIButton extends Vue {
   @Prop(Boolean)
   readonly circle!: boolean
 
+  // 控制是否禁用
+  @Prop(Boolean)
+  readonly disabled!: boolean
+
+  // 控制背景颜色
+  @Prop({
+    type: String,
+    default: '#2d8cf0'
+  })
+  readonly color: string
+  private get initColor() {
+    if (this.disabled) {
+      if (!this.border && !this.text) return '#f4f4f4'
+      else return '#c5c8ce'
+    } else return this.color
+  }
+
+  // 文字颜色
+  @Prop({
+    type: String,
+    default: '#333333'
+  })
+  readonly titleColor: string
+  private get initTitleColor() {
+    if (this.disabled) return '#c5c8ce'
+    else if (this.border || this.text) return this.color
+    else return this.titleColor
+  }
+
   //方法装饰器
   @Emit('click')
-  onClick(e: MouseEvent) {
-    return
+  emitClick(e: MouseEvent) {
+    return e
+  }
+  // 禁止时不触发click
+  private onClick(e: MouseEvent) {
+    if (!this.disabled) this.emitClick(e)
   }
   // onClick(e: MouseEvent) {
   //   this.$emit('click', e)
@@ -89,17 +128,19 @@ Resize(mw, h, pr, fs)
     padding 0
 .ui-btn
   Resize(64px, 36px, 16px, 0.875rem)
-  border 0 solid black
+  border 0 solid var(--color-tint)
   border-radius 4px
-  color #f0f0f0
-  background-color #2d8cf0
+  color var(--color-title)
+  background-color var(--color-tint)
   font-weight 500
   letter-spacing 0.09em
   cursor pointer
   user-select none
   outline none
-.ui-btn:active
-  transform scale(0.95)
+  &:not(.ui-btn-disabled):hover
+    filter brightness(120%)
+  &:not(.ui-btn-disabled):active
+    transform scale(0.98)
 .ui-btn-long
   width 100%
 // 按键大小
@@ -115,14 +156,14 @@ Resize(mw, h, pr, fs)
 .ui-btn-border
   border-width 1px
 .ui-btn-dashed
-  color #4d4d4d
   border-style dashed
 .ui-btn-text, .ui-btn-border
-  color #4d4d4d
   background-color transparent
 // 圆角样式
 .ui-btn-tile
   border-radius 0
 .ui-btn-rounded, .ui-btn-circle
   border-radius 1000px
+.ui-btn-disabled
+  cursor not-allowed
 </style>

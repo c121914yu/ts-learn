@@ -50,7 +50,7 @@
         >文字</UIButton>
       </div>
 
-      <div class="border">
+      <div class="radius">
         <UIButton class="btn">正常</UIButton>
         <UIButton
           class="btn"
@@ -64,6 +64,73 @@
           class="btn"
           circle
         >圆</UIButton>
+      </div>
+
+      <div class="color">
+        <UIButton class="btn">默认</UIButton>
+        <UIButton
+          class="btn"
+          color="red"
+        >红色</UIButton>
+        <UIButton
+          class="btn"
+          border
+          large
+          color="red"
+        >红色</UIButton>
+        <UIButton
+          class="btn"
+          border
+          dashed
+          small
+          color="#5ad8a6"
+        >绿色</UIButton>
+      </div>
+
+      <div class="text-color">
+        <UIButton class="btn">默认</UIButton>
+        <UIButton
+          class="btn"
+          titleColor="#f0f0f0"
+        >白色</UIButton>
+        <UIButton
+          class="btn"
+          color="#333"
+          titleColor="red"
+        >红色</UIButton>
+        <UIButton
+          class="btn"
+          border
+          color="red"
+          @click="sayHello"
+        >无背景</UIButton>
+        <UIButton
+          class="btn"
+          border
+          color="red"
+          disabled
+        >禁用</UIButton>
+        <UIButton
+          class="btn"
+          color="red"
+          disabled
+          @click="sayHello"
+        >禁用</UIButton>
+      </div>
+
+      <div class="shadow">
+        <UIButton
+          class="btn"
+          shadow="1"
+        >阴影1</UIButton>
+        <UIButton
+          class="btn"
+          shadow="2"
+        >阴影2</UIButton>
+        <UIButton
+          class="btn"
+          shadow="3"
+        >阴影3</UIButton>
       </div>
     </div>
 

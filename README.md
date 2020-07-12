@@ -68,3 +68,12 @@ console.log(circle.PI)
 // export.ts
 export const PI: number = 5
 ```
+
+## 接口
+
+interface name{}
+?: 定义的变量可写可不写
+readonly 修饰的变量只可读
+[propName: string]: any 任意类型任意名称变量
+接口可以继承其他接口与类相同用法
+generic 泛型，与 c++模板类似

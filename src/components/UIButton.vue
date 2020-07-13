@@ -1,116 +1,119 @@
 <template>
-  <button
-    class="ui-btn"
-    :class="[UIshadow,{ 
-      'ui-btn-long': long,
-      'ui-btn-xsmall': xsmall,
-      'ui-btn-small': small,
-      'ui-btn-large': large,
-      'ui-btn-xlarge': xlarge,
-      'ui-btn-border': border,
-      'ui-btn-dashed': dashed,
-      'ui-btn-text': text,
-      'ui-btn-tile': tile,
-      'ui-btn-rounded': rounded,
-      'ui-btn-circle': circle,
-      'ui-btn-disabled': disabled
-    }]"
-    :style="{
-      '--color-tint': initColor,
-      '--color-title': initTitleColor
-    }"
-    @click="onClick"
-  >
-    <!-- 插槽 -->
-    <slot>Button</slot>
-  </button>
+	<button
+		class="ui-btn"
+		:class="[
+			UIshadow,
+			{
+				'ui-btn-long': long,
+				'ui-btn-xsmall': xsmall,
+				'ui-btn-small': small,
+				'ui-btn-large': large,
+				'ui-btn-xlarge': xlarge,
+				'ui-btn-border': border,
+				'ui-btn-dashed': dashed,
+				'ui-btn-text': text,
+				'ui-btn-tile': tile,
+				'ui-btn-rounded': rounded,
+				'ui-btn-circle': circle,
+				'ui-btn-disabled': disabled,
+			},
+		]"
+		:style="{
+			'--color-tint': initColor,
+			'--color-title': initTitleColor,
+		}"
+		@click="onClick"
+	>
+		<!-- 插槽 -->
+		<slot>Button</slot>
+	</button>
 </template>
 
 <script lang="ts">
-import { Component, Emit, Prop, Mixins } from 'vue-property-decorator'
-import UIshadow from './UIshadow.vue'
+import { Component, Emit, Prop, Mixins } from "vue-property-decorator"
+import UIshadow from "./UIshadow.vue"
 @Component //类装饰器
 export default class UIButton extends Mixins(UIshadow) {
-  //属性装饰器,仅可读
-  @Prop(Boolean)
-  readonly long!: boolean //!代表非空断言符号，表示变量不会为null或undefined,即不会进行类型转换
-  // 两种类型
-  @Prop([Boolean, Number])
-  readonly long1!: boolean | number
-  // 含初始值
-  @Prop({
-    type: [Boolean, Number],
-    default: true
-  })
-  readonly long2!: boolean | number
+	//属性装饰器,仅可读
+	@Prop(Boolean)
+	readonly long!: boolean //!代表非空断言符号，表示变量不会为null或undefined,即不会进行类型转换
+	// 两种类型
+	@Prop([Boolean, Number])
+	readonly long1!: boolean | number
+	// 含初始值
+	@Prop({
+		type: [Boolean, Number],
+		default: true,
+	})
+	readonly long2!: boolean | number
 
-  // 控制大小
-  @Prop(Boolean)
-  readonly xsmall!: boolean
-  @Prop(Boolean)
-  readonly small!: boolean
-  @Prop(Boolean)
-  readonly large!: boolean
-  @Prop(Boolean)
-  readonly xlarge!: boolean
+	// 控制大小
+	@Prop(Boolean)
+	readonly xsmall!: boolean
+	@Prop(Boolean)
+	readonly small!: boolean
+	@Prop(Boolean)
+	readonly large!: boolean
+	@Prop(Boolean)
+	readonly xlarge!: boolean
 
-  // 控制边框
-  @Prop(Boolean)
-  readonly border!: boolean
-  @Prop(Boolean)
-  readonly dashed!: boolean
-  @Prop(Boolean)
-  readonly text!: boolean
+	// 控制边框
+	@Prop(Boolean)
+	readonly border!: boolean
+	@Prop(Boolean)
+	readonly dashed!: boolean
+	@Prop(Boolean)
+	readonly text!: boolean
 
-  // 控制圆角
-  @Prop(Boolean)
-  readonly tile!: boolean
-  @Prop(Boolean)
-  readonly rounded!: boolean
-  @Prop(Boolean)
-  readonly circle!: boolean
+	// 控制圆角
+	@Prop(Boolean)
+	readonly tile!: boolean
+	@Prop(Boolean)
+	readonly rounded!: boolean
+	@Prop(Boolean)
+	readonly circle!: boolean
 
-  // 控制是否禁用
-  @Prop(Boolean)
-  readonly disabled!: boolean
+	// 控制是否禁用
+	@Prop(Boolean)
+	readonly disabled!: boolean
 
-  // 控制背景颜色
-  @Prop({
-    type: String,
-    default: '#2d8cf0'
-  })
-  readonly color: string
-  private get initColor() {
-    if (this.disabled) {
-      if (!this.border && !this.text) return '#f4f4f4'
-      else return '#c5c8ce'
-    } else return this.color
-  }
+	// 控制背景颜色
+	@Prop({
+		type: String,
+		default: "#2d8cf0",
+	})
+	readonly color: string
+	private get initColor() {
+		if (this.disabled) {
+			if (!this.border && !this.text) return "#f4f4f4"
+			else return "#c5c8ce"
+		} else return this.color
+	}
 
-  // 文字颜色
-  @Prop({
-    type: String,
-    default: '#333333'
-  })
-  readonly titleColor: string
-  private get initTitleColor() {
-    if (this.disabled) return '#c5c8ce'
-    else if (this.border || this.text) return this.color
-    else return this.titleColor
-  }
+	// 文字颜色
+	@Prop({
+		type: String,
+		default: "#333333",
+	})
+	readonly titleColor: string
+	private get initTitleColor() {
+		if (this.disabled) return "#c5c8ce"
+		else if (this.border || this.text) return this.color
+		else return this.titleColor
+	}
 
-  //方法装饰器
-  @Emit('click')
-  emitClick(e: MouseEvent) {
-    return e
-  }
-  // 禁止时不触发click
-  private onClick(e: MouseEvent) {
-    if (!this.disabled) this.emitClick(e)
-  }
-  // onClick(e: MouseEvent) {
-  //   this.$emit('click', e)
-  // }
+	//方法装饰器
+	@Emit("click")
+	emitClick(e: MouseEvent) {
+		return e
+	}
+	// 禁止时不触发click
+	private onClick(e: MouseEvent) {
+		if (!this.disabled) this.emitClick(e)
+	}
+	// onClick(e: MouseEvent) {
+	//   this.$emit('click', e)
+	// }
 }
 </script>
 
